@@ -34,6 +34,15 @@ public class DecDotted {
         ipDec[3] = fourth;
     }
     
+    public DecDotted(DecDotted ref)
+    {
+        ipDec = new int[4];
+        for (int i=0; i<4; i++)
+        {
+            ipDec[i] = ref.getPart(i);
+        }
+    }
+    
     public int getPart(int index) // 0 <= i <=3
     {
         return ipDec[index];
@@ -70,5 +79,36 @@ public class DecDotted {
         }
     }
     
+    public boolean less(DecDotted ref)
+    {
+        boolean ret = false;
+        
+        if (ipDec[0] < ref.getPart(0))
+        {
+            ret = true;
+        }
+        else
+        {
+            if (ipDec[1] < ref.getPart(1))
+            {
+                ret = true;
+            }
+            else
+            {
+                if (ipDec[2] < ref.getPart(2))
+                {
+                    ret = true;
+                }
+                else
+                {
+                    if (ipDec[3] < ref.getPart(3))
+                    {
+                        ret = true;
+                    }
+                }
+            }
+        }
+        return ret;
+    }
     private final int[] ipDec;
 }

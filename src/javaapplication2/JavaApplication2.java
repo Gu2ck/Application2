@@ -4,6 +4,7 @@
  */
 package javaapplication2;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
@@ -54,12 +55,41 @@ public class JavaApplication2 {
                             System.out.println("Broadcast address: " + ifa.getBroadcast()); 
                             System.out.println("");
                             
-                            NetworkCalculator b = new NetworkCalculator(a.getHostAddress(), 23);
-                            System.out.println(b.asString());
-                            NetworkCalculator dd = new NetworkCalculator(a.getHostAddress(), ifa.getNetworkPrefixLength());
-                            System.out.println(dd.asString());
-                            NetworkCalculator d = new NetworkCalculator(a.getHostAddress(), 25);
-                            System.out.println(d.asString());
+                            NetworkCalculator netCalc = new NetworkCalculator(a.getHostAddress(), ifa.getNetworkPrefixLength());
+                            System.out.println(netCalc.infoString());
+                            
+                            DecDotted currIP = netCalc.getMin();
+                            DecDotted bcIP = netCalc.getBroadcastIP();
+                            
+                            while (currIP.less(bcIP))
+                            {
+                                //System.out.println("DEBUG: " + currIP.asString());                                    
+                                try
+                                {
+                                    // InetAddress ip = InetAddress.getByAddress(currIP.getPart(0),currIP.getPart(1),currIP.getPart(2),currIP.getPart(3));
+                                    InetAddress ia = InetAddress.getByName(currIP.asString());
+                                    // if (ia.isReachable(200))
+                                    String deviceName = ia.getHostName();
+                                    if (ia.isReachable(n, 0, 1000))
+                                    {
+                                        System.out.println(currIP.asString() + " (" + deviceName + ") reachable");
+                                    }
+                                    else if (!ia.getHostAddress().equals(deviceName))
+                                    {
+                                        System.out.println(currIP.asString() + " (" + deviceName + ") has DNS entry");
+                                    }
+                                    else
+                                    {
+                                        // System.out.println(currIP.asString() + " the host address and host name are equal, meaning the host name could not be resolved");
+                                    }
+
+                                }
+                                catch(IOException ex)
+                                {
+                                    System.out.println(currIP.asString() + " timed out");
+                                }
+                                currIP.add(1);
+                            }
                         }
                     }
                 }

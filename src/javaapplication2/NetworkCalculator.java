@@ -53,6 +53,7 @@ public class NetworkCalculator {
             maxIP.setPart(i, myIp.getPart(i) | invertedNetDec.getPart(i));
         }
         minIP.add(1);
+        broadcastIP = new DecDotted(maxIP);
         maxIP.add(-1);
     }
     
@@ -61,7 +62,7 @@ public class NetworkCalculator {
         return myIp;
     }
     
-    public String asString()
+    public String infoString()
     {
         String ret;
         ret  = "IP: " + myIp.asString() + "/" + netBitNo;
@@ -69,8 +70,24 @@ public class NetworkCalculator {
         ret += ", NetMask: " + netDec.asString();
         ret += ", minIP: " + minIP.asString();
         ret += ", maxIP: " + maxIP.asString();
+        ret += ", broadcast: " + broadcastIP.asString();
         
         return ret;
+    }
+    
+    public DecDotted getMin()
+    {
+        return minIP;
+    }
+    
+    public DecDotted getMax()
+    {
+        return maxIP;
+    }
+    
+    public DecDotted getBroadcastIP()
+    {
+        return broadcastIP;
     }
     
     private final DecDotted myIp;
@@ -80,4 +97,5 @@ public class NetworkCalculator {
     private final DecDotted invertedNetDec;
     private final DecDotted minIP;
     private final DecDotted maxIP;
+    private final DecDotted broadcastIP;
 }
