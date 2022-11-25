@@ -61,16 +61,20 @@ public class JavaApplication2 {
                             DecDotted currIP = netCalc.getMin();
                             DecDotted bcIP = netCalc.getBroadcastIP();
                             
-                            while (currIP.less(bcIP))
+                            int ips = 0;
+                            while (currIP.less(bcIP) && ips < 300 && currIP.getPart(0) != 10)
                             {
+                                ips++;
+                                System.out.println("                                                 DEBUG: " + currIP.asString());
                                 //System.out.println("DEBUG: " + currIP.asString());                                    
                                 try
                                 {
                                     // InetAddress ip = InetAddress.getByAddress(currIP.getPart(0),currIP.getPart(1),currIP.getPart(2),currIP.getPart(3));
                                     InetAddress ia = InetAddress.getByName(currIP.asString());
-                                    // if (ia.isReachable(200))
                                     String deviceName = ia.getHostName();
-                                    if (ia.isReachable(n, 0, 1000))
+                                    
+                                    // if (ia.isReachable(n, 10, 5000))
+                                    if (ia.isReachable(1000))
                                     {
                                         System.out.println(currIP.asString() + " (" + deviceName + ") reachable");
                                     }

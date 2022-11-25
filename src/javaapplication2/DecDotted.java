@@ -70,7 +70,7 @@ public class DecDotted {
         int tmp = ipDec[3] + n;
         if (tmp > 255)
         {
-            ipDec[3] = 255;
+            ipDec[3] = 0;
             ipDec[2] += tmp % 255;
         }
         else
