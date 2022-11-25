@@ -65,7 +65,7 @@ public class JavaApplication2 {
                             while (currIP.less(bcIP) && ips < 300 && currIP.getPart(0) != 10)
                             {
                                 ips++;
-                                System.out.println("                                                 DEBUG: " + currIP.asString());
+                                // System.out.println("                                                 DEBUG: " + currIP.asString());
                                 //System.out.println("DEBUG: " + currIP.asString());                                    
                                 try
                                 {
@@ -74,7 +74,7 @@ public class JavaApplication2 {
                                     String deviceName = ia.getHostName();
                                     
                                     // if (ia.isReachable(n, 10, 5000))
-                                    if (ia.isReachable(1000))
+                                    if (ia.isReachable(500))
                                     {
                                         System.out.println(currIP.asString() + " (" + deviceName + ") reachable");
                                     }
